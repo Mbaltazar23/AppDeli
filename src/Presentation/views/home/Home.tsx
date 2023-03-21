@@ -10,22 +10,29 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { RoundedButton } from "../../components/RoundedButton";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import styles from "./Styles";
 import { CustomTextInput } from "../../components/CustomTextInput";
 
-export const HomeScreen = () => {
-  const { email, password, onChange, login, errorMessage } = useViewModel();
+interface Props extends StackScreenProps<RootStackParamList, "HomeScreen"> {}
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+export const HomeScreen = ({ navigation, route }: Props) => {
+  const { email, password, onChange, login, errorMessage, user } =
+    useViewModel();
 
   useEffect(() => {
-    if (errorMessage !== '') {
+    if (errorMessage !== "") {
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (user?.id !== null && user?.id !== undefined) {
+      navigation.replace("ProfileInfoScreen");
+    }
+  }, [user]);
 
   return (
     // COLUMN
