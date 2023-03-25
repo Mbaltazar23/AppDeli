@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { RegisterAuthUseCase } from "../../../Domain/useCases/auth/RegisterAuth";
+import { RegisterWithImageWAuthUseCase } from "../../../Domain/useCases/auth/RegisterWithImageAuth";
 import * as ImagePicker from "expo-image-picker";
+import { SaveUserLocalUseCase } from "../../../Domain/useCases/userLocal/SaveUserLocal";
+import { useUserLocal } from "../../hooks/useUserLocal";
 
 const RegisterViewModel = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -13,9 +16,9 @@ const RegisterViewModel = () => {
     password: "",
     confirmPassword: "",
   });
-
-  const [file, setFile] = useState<ImagePicker.ImageInfo>();
-
+  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
+  const { user, getUserSession } = useUserLocal();
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -23,9 +26,9 @@ const RegisterViewModel = () => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      onChange("image", result.uri);
-      setFile(result);
+    if (!result.canceled) {
+      onChange("image", result.assets[0].uri);
+      setFile(result.assets[0]);
     }
   };
 
@@ -36,9 +39,9 @@ const RegisterViewModel = () => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      onChange("image", result.uri);
-      setFile(result);
+    if (!result.canceled) {
+      onChange("image", result.assets[0].uri);
+      setFile(result.assets[0]);
     }
   };
 
@@ -48,8 +51,18 @@ const RegisterViewModel = () => {
 
   const register = async () => {
     if (isValidForm()) {
-      const response = await RegisterAuthUseCase(values);
+      setLoading(true);
+      //const response = await RegisterAuthUseCase(values);
+      const response = await RegisterWithImageWAuthUseCase(values, file!);
+      setLoading(false);
       console.log("RESULT: " + JSON.stringify(response));
+
+      if (response.success) {
+        await SaveUserLocalUseCase(response.data);
+        getUserSession();
+      } else {
+        setErrorMessage(response.message);
+      }
     }
   };
 
@@ -83,6 +96,11 @@ const RegisterViewModel = () => {
       return false;
     }
 
+    if (values.image === "") {
+      setErrorMessage("Seleccione una imagen");
+      return false;
+    }
+
     return true;
   };
 
@@ -93,6 +111,8 @@ const RegisterViewModel = () => {
     pickImage,
     takePhoto,
     errorMessage,
+    user,
+    loading,
   };
 };
 
