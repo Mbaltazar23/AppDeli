@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const AdminCategoryCreateStyles = StyleSheet.create({
+const AdminCategoryUpdateStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -31,4 +31,4 @@ const AdminCategoryCreateStyles = StyleSheet.create({
   },
 });
 
-export default AdminCategoryCreateStyles;
+export default AdminCategoryUpdateStyles;

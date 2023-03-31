@@ -1,10 +1,31 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { FlatList, Text, ToastAndroid, View } from "react-native";
+import { AdminCategoryListItem } from "./Item";
+import useViewModel from "./ViewModel";
 
 export const AdminCategoryListScreen = () => {
+  const { categories, responseMessage, getCategories, deleteCategory } =
+    useViewModel();
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    if (responseMessage !== "") {
+      ToastAndroid.show(responseMessage, ToastAndroid.LONG);
+    }
+  }, [responseMessage]);
+
   return (
-    <View>
-      <Text>AdminCategoryListScreen</Text>
+    <View style={{ backgroundColor: "white" }}>
+      <FlatList
+        data={categories}
+        keyExtractor={(item) => item.id!}
+        renderItem={({ item }) => (
+          <AdminCategoryListItem category={item} remove={deleteCategory} />
+        )}
+      />
     </View>
   );
 };

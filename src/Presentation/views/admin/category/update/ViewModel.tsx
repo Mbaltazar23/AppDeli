@@ -1,29 +1,32 @@
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { CreateCategoryUseCase } from "../../../../../Domain/useCases/category/CreateCategory";
+import { UpdateCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateCategory";
+import { UpdateWithImageCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateWithImageCategory";
+import { Category } from "../../../../../Domain/entities/Category";
+import { ResponseApiDelivery } from "../../../../../Data/sources/remote/models/ResponseApiDelivery";
 
-const AdminCategoryCreateViewModel = () => {
+const AdminCategoryUpdateViewModel = (category: Category) => {
+  const [values, setValues] = useState(category);
   const [responseMessage, setResponseMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
-
-  const [values, setValues] = useState({
-    name: "",
-    description: "",
-    image: "",
-  });
 
   const onChange = (property: string, value: any) => {
     setValues({ ...values, [property]: value });
   };
 
-  const createCategory = async () => {
+  const updateCategory = async () => {
     setLoading(true);
-    const response = await CreateCategoryUseCase(values, file!);
+    let response = {} as ResponseApiDelivery;
+    if (values.image?.includes("https://")) {
+      // ACTUALIZAR SIN IMAGEN
+      response = await UpdateCategoryUseCase(values);
+    } else {
+      response = await UpdateWithImageCategoryUseCase(values, file!);
+    }
     setResponseMessage(response.message);
     setLoading(false);
 
-    resetForm();
   };
 
   const pickImage = async () => {
@@ -52,23 +55,17 @@ const AdminCategoryCreateViewModel = () => {
     }
   };
 
-  const resetForm = async () => {
-    setValues({
-      name: "",
-      description: "",
-      image: "",
-    });
-  };
+ 
 
   return {
     ...values,
     onChange,
     takePhoto,
     pickImage,
-    createCategory,
+    updateCategory,
     loading,
     responseMessage,
   };
 };
 
-export default AdminCategoryCreateViewModel;
+export default AdminCategoryUpdateViewModel;

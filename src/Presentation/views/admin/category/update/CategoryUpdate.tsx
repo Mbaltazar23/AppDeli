@@ -1,3 +1,4 @@
+import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -6,6 +7,7 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from "react-native";
+import { RootStackParamList } from "../../../../../../App";
 import { CustomTextInput } from "../../../../components/CustomTextInput";
 import { ModalPickImage } from "../../../../components/ModalPickImage";
 import { RoundedButton } from "../../../../components/RoundedButton";
@@ -13,7 +15,11 @@ import { MyColors, MyStyles } from "../../../../theme/AppTheme";
 import styles from "./Styles";
 import useViewModel from "./ViewModel";
 
-export const AdminCategoryCreateScreen = () => {
+interface Props
+  extends StackScreenProps<RootStackParamList, "AdminCategoryUpdateScreen"> {}
+
+export const AdminCategoryUpdateScreen = ({ navigation, route }: Props) => {
+  const { category } = route.params;
   const {
     name,
     description,
@@ -23,8 +29,8 @@ export const AdminCategoryCreateScreen = () => {
     takePhoto,
     pickImage,
     image,
-    createCategory,
-  } = useViewModel();
+    updateCategory,
+  } = useViewModel(category);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -70,8 +76,8 @@ export const AdminCategoryCreateScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <RoundedButton
-          text="CREAR CATEGORIA"
-          onPress={() => createCategory()}
+          text="ACTUALIZAR CATEGORIA"
+          onPress={() => updateCategory()}
         />
       </View>
 
