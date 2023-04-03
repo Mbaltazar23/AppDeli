@@ -1,43 +1,39 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Category } from "../../../../../Domain/entities/Category";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-
 import { CategoryStackParamList } from "../../../../navigator/AdminCategoryNavigator";
+import { Product } from "../../../../../Domain/entities/Product";
+
 interface Props {
-  category: Category;
+  product: Product;
   remove: (id: string) => void;
 }
-export const AdminCategoryListItem = ({ category, remove }: Props) => {
+
+export const AdminProductListItem = ({ product, remove }: Props) => {
   const navigation =
     useNavigation<StackNavigationProp<CategoryStackParamList>>();
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("AdminProductNavigator", { category: category })
-      }
+    //onPress={() => navigation.navigate("AdminProductNavigator", {product: product })}
     >
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: category.image }} />
+        <Image style={styles.image} source={{ uri: product.image1 }} />
         <View style={styles.info}>
-          <Text style={styles.title}>{category.name}</Text>
-          <Text style={styles.description}>{category.description}</Text>
+          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.description}>{product.description}</Text>
+          <Text style={styles.price}>${product.price}</Text>
         </View>
         <View style={styles.actionContainer}>
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("AdminCategoryUpdateScreen", {
-                category: category,
-              })
-            }
+          // onPress={() => navigation.navigate("AdminCategoryUpdateScreen", { product: product, }) }
           >
             <Image
               style={styles.actionImage}
               source={require("../../../../../../assets/edit.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => remove(category.id!)}>
+          <TouchableOpacity onPress={() => remove(product.id!)}>
             <Image
               style={styles.actionImage}
               source={require("../../../../../../assets/trash.png")}
@@ -54,9 +50,10 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     flexDirection: "row",
-    height: 70,
+    height: 90,
     marginHorizontal: 20,
     marginTop: 10,
+    paddingTop: 10
   },
   image: {
     width: 60,
@@ -75,6 +72,11 @@ const styles = StyleSheet.create({
     color: "gray",
     fontSize: 12,
     marginTop: 3,
+  },
+  price: {
+    color: "green",
+    fontSize: 12,
+    fontWeight: 'bold'
   },
   actionContainer: {
     marginRight: 40,

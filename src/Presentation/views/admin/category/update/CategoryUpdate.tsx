@@ -7,16 +7,16 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from "react-native";
-import { RootStackParamList } from "../../../../../../App";
 import { CustomTextInput } from "../../../../components/CustomTextInput";
 import { ModalPickImage } from "../../../../components/ModalPickImage";
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { MyColors, MyStyles } from "../../../../theme/AppTheme";
 import styles from "./Styles";
 import useViewModel from "./ViewModel";
+import { CategoryStackParamList } from "../../../../navigator/AdminCategoryNavigator";
 
 interface Props
-  extends StackScreenProps<RootStackParamList, "AdminCategoryUpdateScreen"> {}
+  extends StackScreenProps<CategoryStackParamList, "AdminCategoryUpdateScreen"> {}
 
 export const AdminCategoryUpdateScreen = ({ navigation, route }: Props) => {
   const { category } = route.params;

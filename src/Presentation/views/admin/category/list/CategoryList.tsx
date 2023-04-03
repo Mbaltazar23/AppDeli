@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FlatList, Text, ToastAndroid, View } from "react-native";
+import { FlatList, ToastAndroid, View } from "react-native";
 import { AdminCategoryListItem } from "./Item";
 import useViewModel from "./ViewModel";
 
@@ -7,9 +7,7 @@ export const AdminCategoryListScreen = () => {
   const { categories, responseMessage, getCategories, deleteCategory } =
     useViewModel();
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+
 
   useEffect(() => {
     if (responseMessage !== "") {

@@ -5,7 +5,7 @@ import { RolesItem } from "./Item";
 import useViewModel from "./ViewModel";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../App";
+import { RootStackParamList } from "../../navigator/MainStackNavitagor";
 
 interface Props extends StackScreenProps<RootStackParamList, "RolesScreen"> {}
 
