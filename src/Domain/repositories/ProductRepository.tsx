@@ -8,4 +8,11 @@ export interface ProductRepository {
     files: ImagePicker.ImageInfo[]
   ): Promise<ResponseApiDelivery>;
   getProductsByCategory(id_category: string): Promise<Product[]>;
+  update(product: Product): Promise<ResponseApiDelivery>;
+  updateWithImages(
+    product: Product,
+    files: ImagePicker.ImageInfo[]
+  ): Promise<ResponseApiDelivery>;
+
+  remove(product: Product): Promise<ResponseApiDelivery>;
 }

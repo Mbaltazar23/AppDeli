@@ -18,13 +18,13 @@ import { ProductStackParamList } from "../../../../navigator/AdminProductNavigat
 import { ModalPickMultipleImage } from "../../../../components/ModalPickMultipleImage";
 
 interface Props
-  extends StackScreenProps<ProductStackParamList, "AdminProductCreateScreen"> {}
+  extends StackScreenProps<ProductStackParamList, "AdminProductUpdateScreen"> {}
 
-export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
+export const AdminProductUpdateScreen = ({ navigation, route }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [numberImage, setNumberImage] = useState(1);
 
-  const { category } = route.params;
+  const { category, product } = route.params;
   const {
     name,
     description,
@@ -37,8 +37,8 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
     image1,
     image2,
     image3,
-    createProduct,
-  } = useViewModel(category);
+    updateProduct,
+  } = useViewModel(product, category);
 
   useEffect(() => {
     if (responseMessage !== "") {
@@ -133,8 +133,8 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
           />
           <View style={styles.buttonContainer}>
             <RoundedButton
-              text="CREAR PRODUCTO"
-              onPress={() => createProduct()}
+              text="ACTUALIZAR PRODUCTO"
+              onPress={() => updateProduct()}
             />
           </View>
         </ScrollView>
