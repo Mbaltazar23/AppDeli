@@ -6,7 +6,7 @@ import { CategoryContext } from "../../../../context/CategoryContext";
 
 const AdminCategoryListViewModel = () => {
   const [responseMessage, setResponseMessage] = useState("")
-const {categories,getCategories, remove} = useContext(CategoryContext)
+  const {categories,getCategories, remove} = useContext(CategoryContext)
 
 
   const deleteCategory = async (idCategory: string) => {

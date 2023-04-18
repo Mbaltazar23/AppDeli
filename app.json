@@ -1,44 +1,64 @@
 {
-  "expo": {
-    "name": "App-Delivery",
-    "slug": "AppDelivery",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/logo.png",
-    "userInterfaceStyle": "light",
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "custom photos permission",
-          "cameraPermission": "Allow $(PRODUCT_NAME) to open the camera",
-          "//": "Disables the microphone permission",
-          "microphonePermission": false
+    "expo": {
+        "name": "App-Delivery",
+        "slug": "AppDelivery",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/logo.png",
+        "userInterfaceStyle": "light",
+        "plugins": [
+            [
+                "expo-image-picker", {
+                    "photosPermission": "custom photos permission",
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to open the camera",
+                    "//": "Disables the microphone permission",
+                    "microphonePermission": false
+                }
+            ]
+        ],
+        "splash": {
+            "image": "./assets/logo.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.mbaltazar.AppDelivery",
+            "config": {
+                "googleMapsApiKey": "AIzaSyCTLQJidWJgcHYOyHMrsfOMWAH73DLUeHY"
+            },
+            "infoPlist": {
+                "UIBackgroundModes": ["location", "fetch"]
+            }
+        },
+        "android": {
+            "androidStatusBar": {
+                "backgroundColor": "#000000",
+                "barStyle": "light-content"
+            },
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/logo.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.mbaltazar.AppDelivery",
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyCTLQJidWJgcHYOyHMrsfOMWAH73DLUeHY"
+                }
+            },
+            "permissions": ["ACCESS_BACKGROUND_LOCATION", "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "FOREGROUND_SERVICE"]
+        },
+        "web": {
+            "favicon": "./assets/logo.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "6374d49d-56f4-40c8-ad9c-f82b18a6fb7c"
+            }
         }
-      ]
-    ],
-    "splash": {
-      "image": "./assets/logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
-  }
 }

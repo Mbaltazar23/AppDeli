@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import { ClientOrderListScreen } from '../views/client/order/list/OrderList';
-
 import { ProfileInfoScreen } from '../views/profile/info/ProfileInfo';
 import { ClientStackNavigator } from './ClientStackNavitagor';
 

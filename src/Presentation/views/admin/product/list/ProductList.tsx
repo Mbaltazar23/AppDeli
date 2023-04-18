@@ -19,6 +19,7 @@ export const AdminProductListScreen = ({ navigation, route }: Props) => {
       getProducts(category.id!);
     }
   }, []);
+  
   useEffect(() => {
     if (responseMessage !== "") {
       ToastAndroid.show(responseMessage, ToastAndroid.LONG);

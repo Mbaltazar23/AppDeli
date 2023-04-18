@@ -1,0 +1,102 @@
+import { createContext, useEffect, useState } from "react";
+import { ResponseApiDelivery } from "../../Data/sources/remote/models/ResponseApiDelivery";
+import { Order } from "../../Domain/entities/Order";
+import { GetByStatusByOrderUseCase } from "../../Domain/useCases/order/GetByStatusOrder";
+import { UpdateToDispatchesOrderUseCase } from "../../Domain/useCases/order/UpdateToDispatchedOrder";
+import { GetByDeliveryAndStatusByOrderUseCase } from "../../Domain/useCases/order/GetByDeliveryAndStatusOrder";
+import { UpdateToOnTheWayOrderUseCase } from "../../Domain/useCases/order/UpdateToOnTheWayOrder";
+
+export interface OrderContextProps {
+  ordersPayed: Order[];
+  ordersDispatched: Order[];
+  ordersOnTheWay: Order[];
+  ordersDelivery: Order[];
+  getOrderByStatus(status: string): Promise<void>;
+  getOrderByDeliveryAndStatus(
+    idDelivery: string,
+    status: string
+  ): Promise<void>;
+
+  updateToDispatched(order: Order): Promise<ResponseApiDelivery>;
+  updateToOnTheWay(order: Order): Promise<ResponseApiDelivery>;
+}
+
+export const OrderContext = createContext({} as OrderContextProps);
+
+export const OrderProvider = ({ children }: any) => {
+  const [ordersPayed, setOrdersPayed] = useState<Order[]>([]);
+  const [ordersDispatched, setOrdersDispatched] = useState<Order[]>([]);
+  const [ordersOnTheWay, setOrdersOnTheWay] = useState<Order[]>([]);
+  const [ordersDelivery, setOrdersDelivery] = useState<Order[]>([]);
+
+  useEffect(() => {
+    setOrdersPayed([]);
+    setOrdersDispatched([]);
+    setOrdersOnTheWay([]);
+    setOrdersDelivery([]);
+  }, []);
+
+  const getOrderByStatus = async (status: string) => {
+    const result = await GetByStatusByOrderUseCase(status);
+    if (status === "PAGADO") {
+      setOrdersPayed(result);
+    } else if (status === "DESPACHADO") {
+      setOrdersDispatched(result);
+    } else if (status === "EN CAMINO") {
+      setOrdersOnTheWay(result);
+    } else if (status === "ENTREGADO") {
+      setOrdersDelivery(result);
+    }
+  };
+
+  const getOrderByDeliveryAndStatus = async (
+    idDelivery: string,
+    status: string
+  ) => {
+    const result = await GetByDeliveryAndStatusByOrderUseCase(
+      idDelivery,
+      status
+    );
+    if (status === "PAGADO") {
+      setOrdersPayed(result);
+    } else if (status === "DESPACHADO") {
+      setOrdersDispatched(result);
+    } else if (status === "EN CAMINO") {
+      setOrdersOnTheWay(result);
+    } else if (status === "ENTREGADO") {
+      setOrdersDelivery(result);
+    }
+  };
+
+  const updateToDispatched = async (order: Order) => {
+    const result = await UpdateToDispatchesOrderUseCase(order);
+    getOrderByStatus("PAGADO");
+    getOrderByStatus("DESPACHADO");
+    return result;
+  };
+
+  const updateToOnTheWay = async (order: Order) => {
+    const result = await UpdateToOnTheWayOrderUseCase(order);
+    getOrderByDeliveryAndStatus(order.delivery?.id!, "DESPACHADO");
+
+    getOrderByDeliveryAndStatus(order.delivery?.id!, "EN CAMINO");
+    return result;
+  };
+
+  return (
+    <OrderContext.Provider
+      value={{
+        ordersPayed,
+        ordersDispatched,
+        ordersOnTheWay,
+        ordersDelivery,
+        getOrderByStatus,
+        getOrderByDeliveryAndStatus,
+        updateToDispatched,
+        updateToOnTheWay,
+      }}
+    >
+      {children}
+    </OrderContext.Provider>
+  );
+};

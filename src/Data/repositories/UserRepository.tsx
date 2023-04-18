@@ -10,6 +10,17 @@ import {
 import { ResponseApiDelivery } from "../sources/remote/models/ResponseApiDelivery";
 
 export class UserRepositoryImp implements UserRepository {
+  async getDeliveryMen(): Promise<User[]> {
+    try {
+      const response = await ApiDelivery.get<User[]>("/users/findDeliveryMen");
+      return Promise.resolve(response.data);
+    } catch (error) {
+      let e = error as AxiosError;
+      console.log("ERROR: " + JSON.stringify(e.response?.data));
+      return Promise.resolve([]);
+    }
+  }
+
   async update(user: User): Promise<ResponseApiDelivery> {
     try {
       const response = await ApiDelivery.put<ResponseApiDelivery>(

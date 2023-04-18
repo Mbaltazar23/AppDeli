@@ -1,7 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { RootStackParamList } from "../../navigator/MainStackNavitagor";
+import { RootStackParamList } from "../../navigator/MainStackNavigator";
 import { Rol } from "../../../Domain/entities/Rol";
 import { MyColors } from "../../theme/AppTheme";
 interface Props {
@@ -18,6 +18,8 @@ export const RolesItem = ({ rol, height, width, navigation }: Props) => {
           navigation.replace("AdminTabsNavigator");
         } else if (rol.name == "CLIENTE") {
           navigation.replace("ClientTabsNavigator");
+        } else if (rol.name == "REPARTIDOR") {
+          navigation.replace("DeliveryTabsNavigator");
         }
       }}
       style={{ ...styles.container, height: height, width: width }}
