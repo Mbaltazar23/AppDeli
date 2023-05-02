@@ -3,14 +3,15 @@ import { User } from "../../../../Domain/entities/User";
 import { LocalStorage } from "../../local/LocalStorage";
 
 const ApiDelivery = axios.create({
-  baseURL: "http://192.168.1.88:3000/api",
+  //URL inicial : 192.168.1.88 
+  baseURL: "http://192.168.1.163:3000/api",
   headers: {
     "Content-type": "application/json",
   },
 });
 
 const ApiDeliveryWithImage = axios.create({
-  baseURL: "http://192.168.1.88:3000/api",
+  baseURL: "http://192.168.1.163:3000/api",
   headers: {
     "Content-type": "multipart/form-data",
     accept: "application/json",

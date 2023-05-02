@@ -29,17 +29,13 @@
             "supportsTablet": true,
             "bundleIdentifier": "com.mbaltazar.AppDelivery",
             "config": {
-                "googleMapsApiKey": "AIzaSyCTLQJidWJgcHYOyHMrsfOMWAH73DLUeHY"
+                "googleMapsApiKey": "AIzaSyD7M1Wk_hiOt6DLkOTMZ-he1FISDA5bH9M"
             },
             "infoPlist": {
                 "UIBackgroundModes": ["location", "fetch"]
             }
         },
         "android": {
-            "androidStatusBar": {
-                "backgroundColor": "#000000",
-                "barStyle": "light-content"
-            },
             "adaptiveIcon": {
                 "foregroundImage": "./assets/logo.png",
                 "backgroundColor": "#ffffff"

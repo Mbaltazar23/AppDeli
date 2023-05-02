@@ -7,14 +7,15 @@ import { DateFormater } from "../../../../utils/DateFormater";
 import useViewModel from "./ViewModel";
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { DeliveryOrderStackParamList } from "../../../../navigator/DeliveryOrderStackNavigator";
+import { ClientOrderStackParamList } from "../../../../navigator/ClientOrderStackNavigator";
 
 interface Props
   extends StackScreenProps<
-    DeliveryOrderStackParamList,
-    "DeliveryOrderDetailScreen"
+    ClientOrderStackParamList,
+    "ClientOrderDetailScreen"
   > {}
 
-export const DeliveryOrderDetailScreen = ({ navigation, route }: Props) => {
+export const ClientOrderDetailScreen = ({ navigation, route }: Props) => {
   const { order } = route.params;
   const {
     total,
@@ -106,17 +107,11 @@ export const DeliveryOrderDetailScreen = ({ navigation, route }: Props) => {
         <View style={styles.totalInfo}>
           <Text style={styles.total}>TOTAL : $ {total} </Text>
           <View style={styles.button}>
-            {order.status == "DESPACHADO" && (
-              <RoundedButton
-                text="INICIAR ENTREGA"
-                onPress={() => updateToOnTheWayOrder()}
-              />
-            )}
             {order.status == "EN CAMINO" && (
               <RoundedButton
-                text="IR A LA RUTA"
+                text="RASTREAR PEDIDO"
                 onPress={() =>
-                  navigation.navigate("DeliveryOrderMapScreen", {
+                  navigation.navigate("ClientOrderMapScreen", {
                     order: order,
                   })
                 }

@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
-import { ClientOrderListScreen } from '../views/client/order/list/OrderList';
+
 import { ProfileInfoScreen } from '../views/profile/info/ProfileInfo';
 import { ClientStackNavigator } from './ClientStackNavitagor';
+import { ClientOrderStackNavigator } from './ClientOrderStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,9 +26,10 @@ export const ClientTabsNavigator = () =>  {
         }}
       />
       <Tab.Screen
-        name="ClientOrderListScreen"
-        component={ClientOrderListScreen}
+        name="ClientOrderStackNavigator"
+        component={ClientOrderStackNavigator}
         options={{
+          headerShown:false,
           title: "Pedidos",
           tabBarLabel: "Pedidos",
           tabBarIcon: ({ color }) => (
