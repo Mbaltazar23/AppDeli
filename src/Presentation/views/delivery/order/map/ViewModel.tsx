@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 import MapView, { Camera } from "react-native-maps";
 import { Order } from "../../../../../Domain/entities/Order";
 import { OrderContext } from "../../../../context/OrderContext";
+import socket from "../../../../utils/SocketIO"
 
 const DeliveryOrderMapViewModel = (order: Order) => {
   const [messagePermissions, setMessagePermissions] = useState("");
@@ -27,6 +28,13 @@ const DeliveryOrderMapViewModel = (order: Order) => {
   const { updateToDelivered } = useContext(OrderContext);
 
   useEffect(() => {
+    //LLAMADO DE SOCKET
+
+    socket.connect()
+    socket.on("connect", ()=> {
+      console.log("---------- SOCKET IS CONNECT -----------------");
+       
+    })
     const requestPermissions = async () => {
       const foreground = await Location.requestForegroundPermissionsAsync();
       if (foreground.granted) {
@@ -100,10 +108,16 @@ const DeliveryOrderMapViewModel = (order: Order) => {
 
     positionSuscription = await Location.watchPositionAsync(
       {
-        accuracy: Location.Accuracy.BestForNavigation,
+        accuracy: Location.Accuracy.Balanced,
       },
       (location) => {
-        console.log("POSITION : " + JSON.stringify(location.coords, null, 3));
+        //console.log("POSITION : " + JSON.stringify(location.coords, null, 3));
+
+        socket.emit("position",{
+          id_order:order.id!,
+          lat:location?.coords.latitude,
+          lng: location?.coords.longitude
+        })
 
         setPosition(location!.coords);
       }
@@ -123,6 +137,7 @@ const DeliveryOrderMapViewModel = (order: Order) => {
     responseMessage,
     origin,
     destination,
+    socket,
     onRegionChangeComplete,
     stopForegroundUpdate,
     updateToDeliveredOrder

@@ -6,7 +6,6 @@ import { OrderDetailItem } from "./Item";
 import { DateFormater } from "../../../../utils/DateFormater";
 import useViewModel from "./ViewModel";
 import { RoundedButton } from "../../../../components/RoundedButton";
-import { DeliveryOrderStackParamList } from "../../../../navigator/DeliveryOrderStackNavigator";
 import { ClientOrderStackParamList } from "../../../../navigator/ClientOrderStackNavigator";
 
 interface Props
@@ -20,11 +19,7 @@ export const ClientOrderDetailScreen = ({ navigation, route }: Props) => {
   const {
     total,
     responseMessage,
-    open,
-    value,
-    items,
     getTotal,
-    updateToOnTheWayOrder,
   } = useViewModel(order);
 
   useEffect(() => {

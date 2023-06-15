@@ -4,9 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import styles from "./Styles";
 import stylesMap from "./StylesMap";
 import useViewModel from "./ViewModel";
-import { RoundedButton } from "../../../../components/RoundedButton";
 import { StackScreenProps } from "@react-navigation/stack";
-import { DeliveryOrderStackParamList } from "../../../../navigator/DeliveryOrderStackNavigator";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "../../../../constants/GoogleMatApiKey";
@@ -26,9 +24,7 @@ export const ClientOrderMapScreen = ({ navigation, route }: Props) => {
     responseMessage,
     mapRef,
     origin,
-    destination,
-    stopForegroundUpdate,
-    updateToDeliveredOrder,
+    destination,socket
   } = useViewModel(order);
 
   useEffect(() => {
@@ -40,7 +36,7 @@ export const ClientOrderMapScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     const unsusbribe = navigation.addListener("beforeRemove", () => {
       console.log("EVENTO : beforeRemove");
-      stopForegroundUpdate();
+      socket.disconnect()
     });
     return unsusbribe;
   }, [navigation]);
@@ -60,7 +56,7 @@ export const ClientOrderMapScreen = ({ navigation, route }: Props) => {
         style={{ height: "64%", width: "100%", position: "absolute", top: 0 }}
         provider={PROVIDER_GOOGLE}
       >
-        {position !== undefined && (
+        {position.latitude !== 0.0 && (
           <Marker coordinate={position}>
             <Image
               style={styles.markerImage}
@@ -121,20 +117,14 @@ export const ClientOrderMapScreen = ({ navigation, route }: Props) => {
         <View style={styles.infoClient}>
           <Image
             style={styles.imageClient}
-            source={{ uri: order.client?.image }}
+            source={{ uri: order.delivery?.image }}
           />
           <Text style={styles.nameClient}>
-            {order.client?.name} {order.client?.lastname}
+            {order.delivery?.name} {order.delivery?.lastname}
           </Text>
           <Image
             style={styles.imageClient}
             source={require("../../../../../../assets/phone.png")}
-          />
-        </View>
-        <View style={styles.buttonRefPoint}>
-          <RoundedButton
-            text="ENTREGAR PEDIDO"
-            onPress={() => updateToDeliveredOrder()}
           />
         </View>
       </View>

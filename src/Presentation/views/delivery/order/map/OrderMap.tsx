@@ -23,6 +23,7 @@ export const DeliveryOrderMapScreen = ({ navigation, route }: Props) => {
     messagePermissions,
     position,
     responseMessage,
+    socket,
     mapRef,
     origin,
     destination,
@@ -40,6 +41,7 @@ export const DeliveryOrderMapScreen = ({ navigation, route }: Props) => {
     const unsusbribe = navigation.addListener("beforeRemove", () => {
       console.log("EVENTO : beforeRemove");
       stopForegroundUpdate();
+      socket.disconnect()
     });
     return unsusbribe;
   }, [navigation]);

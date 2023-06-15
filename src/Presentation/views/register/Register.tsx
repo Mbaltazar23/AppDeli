@@ -14,7 +14,7 @@ import useViewModel from "./ViewModel";
 import styles from "./Styles";
 import { ModalPickImage } from "../../components/ModalPickImage";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../navigator/MainStackNavitagor";
+import { RootStackParamList } from "../../navigator/MainStackNavigator";
 import { MyColors } from "../../theme/AppTheme";
 interface Props
   extends StackScreenProps<RootStackParamList, "RegisterScreen"> {}
@@ -138,6 +138,7 @@ export const RegisterScreen = ({ navigation, route }: Props) => {
           </View>
         </ScrollView>
       </View>
+      
       <ModalPickImage
         openGallery={pickImage}
         openCamera={takePhoto}

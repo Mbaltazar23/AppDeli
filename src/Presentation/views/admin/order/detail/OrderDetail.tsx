@@ -19,7 +19,6 @@ export const AdminOrderDetailScreen = ({ navigation, route }: Props) => {
   const { order } = route.params;
   const {
     total,
-    deliveryMen,
     responseMessage,
     open,
     value,

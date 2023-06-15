@@ -9,6 +9,11 @@ import { ClientShoppingBagScreen } from "../views/client/shopping_bag/ShoppingBa
 import { ClientAddressListScreen } from "../views/client/address/list/AddressList";
 import { ClientAddressCreateScreen } from "../views/client/address/create/AddressCreate";
 import { ClientAddressMapScreen } from "../views/client/address/map/AddressMap";
+import { ClientPaymentFormScreen } from "../views/client/payment/form/PaymentForm";
+import { ClientPaymentInstallmentsScreen } from "../views/client/payment/installments/PaymentInstallments";
+import { ResponseMercadoPagoCardToken } from "../../Data/sources/remote/models/ResponseMercadoPagoCardToken";
+import { ClientPaymentStatusScreen } from "../views/client/payment/status/PaymentStatus";
+import { ResponseMercadoPagoPayment } from "../../Data/sources/remote/models/ResponseMercadoPagoPayment";
 
 export type ClientStackParamList = {
   ClientCategoryListScreen: undefined;
@@ -16,8 +21,13 @@ export type ClientStackParamList = {
   ClientProductDetailScreen: { product: Product };
   ClientShoppingBagScreen: undefined;
   ClientAddressListScreen: undefined;
-  ClientAddressCreateScreen: {refPoint:string, latitude:number, longitude:number} | undefined;
+  ClientAddressCreateScreen:
+    | { refPoint: string; latitude: number; longitude: number }
+    | undefined;
   ClientAddressMapScreen: undefined;
+  ClientPaymentFormScreen: undefined;
+  ClientPaymentInstallmentsScreen: { cardToken: ResponseMercadoPagoCardToken };
+  ClientPaymentStatusScreen: { paymentData: ResponseMercadoPagoPayment };
 };
 
 const Stack = createNativeStackNavigator<ClientStackParamList>();
@@ -111,6 +121,29 @@ export const ClientStackNavigator = () => {
             headerShown: true,
             title: "Ubica tu direccion en el mapa",
           }}
+        />
+
+        <Stack.Screen
+          name="ClientPaymentFormScreen"
+          component={ClientPaymentFormScreen}
+          options={{
+            headerShown: true,
+            title: "Formulario de pago",
+          }}
+        />
+
+        <Stack.Screen
+          name="ClientPaymentInstallmentsScreen"
+          component={ClientPaymentInstallmentsScreen}
+          options={{
+            headerShown: true,
+            title: "Numero de cuotas",
+          }}
+        />
+
+        <Stack.Screen
+          name="ClientPaymentStatusScreen"
+          component={ClientPaymentStatusScreen}
         />
       </Stack.Navigator>
     </ShoppingBagState>

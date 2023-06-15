@@ -2,10 +2,10 @@ import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { Button, Text, View, Image, Pressable } from "react-native";
 import { RootStackParamList } from "../../../navigator/MainStackNavitagor"; 
-import useViewModel from "./ViewModel";
-import styles from "./Styles";
 import { useNavigation } from "@react-navigation/native";
 import { RoundedButton } from "../../../components/RoundedButton";
+import useViewModel from "./ViewModel";
+import styles from "./Styles";
 
 interface Props extends StackScreenProps<RootStackParamList> {}
 

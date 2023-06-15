@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { RegisterAuthUseCase } from "../../../Domain/useCases/auth/RegisterAuth";
 import { RegisterWithImageWAuthUseCase } from "../../../Domain/useCases/auth/RegisterWithImageAuth";
 import * as ImagePicker from "expo-image-picker";
 import { SaveUserLocalUseCase } from "../../../Domain/useCases/userLocal/SaveUserLocal";
@@ -19,6 +18,7 @@ const RegisterViewModel = () => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
   const { user, getUserSession } = useUserLocal();
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
