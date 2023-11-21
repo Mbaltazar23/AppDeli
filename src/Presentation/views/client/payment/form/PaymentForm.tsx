@@ -64,7 +64,7 @@ export const ClientPaymentFormScreen = ({ navigation, route }: Props) => {
         />
       </View>
       <View style={styles.dropdown}>
-        {/* <DropDownPicker
+         <DropDownPicker
           open={open}
           value={value}
           items={items}
@@ -88,8 +88,8 @@ export const ClientPaymentFormScreen = ({ navigation, route }: Props) => {
             source={require('../../../../../../assets/checked.png')}
             
           />
-        </Pressable>*/}
-        <RoundedButton text='CONTINUAR' onPress={() => handleSubmit()}/> 
+        </Pressable>
+       {/* <RoundedButton text='CONTINUAR' onPress={() => handleSubmit()}/> */}
       </View>
     </View>
   );

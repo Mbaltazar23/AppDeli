@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { RemoveUserLocalUseCase } from "../../../../Domain/useCases/userLocal/RemoveUserLocal";
 import { UserConext } from "../../../context/UserContext";
 
 const ProfileInfoViewModel = () => {

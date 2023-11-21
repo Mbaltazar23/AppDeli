@@ -1,17 +1,18 @@
 import React, { useState, useContext } from "react";
-import * as ImagePicker from "expo-image-picker";
 import { UpdateCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateCategory";
 import { UpdateWithImageCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateWithImageCategory";
 import { Category } from "../../../../../Domain/entities/Category";
 import { ResponseApiDelivery } from "../../../../../Data/sources/remote/models/ResponseApiDelivery";
 import { CategoryContext } from "../../../../context/CategoryContext";
+import * as ImagePicker from "expo-image-picker";
 
 const AdminCategoryUpdateViewModel = (category: Category) => {
   const [values, setValues] = useState(category);
   const [responseMessage, setResponseMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
-const {update, updateWithImage} = useContext(CategoryContext)
+  const {update, updateWithImage} = useContext(CategoryContext)
+  
   const onChange = (property: string, value: any) => {
     setValues({ ...values, [property]: value });
   };
@@ -27,7 +28,6 @@ const {update, updateWithImage} = useContext(CategoryContext)
     }
     setResponseMessage(response.message);
     setLoading(false);
-
   };
 
   const pickImage = async () => {

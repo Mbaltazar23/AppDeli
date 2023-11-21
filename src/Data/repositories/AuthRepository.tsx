@@ -7,6 +7,7 @@ import { ResponseApiDelivery } from "../sources/remote/models/ResponseApiDeliver
 import mime from "mime";
 
 export class AuthRepositoryImpl implements AuthRepository {
+	
   async register(user: User): Promise<ResponseApiDelivery> {
     try {
       const response = await ApiDelivery.post<ResponseApiDelivery>(
